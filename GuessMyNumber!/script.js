@@ -1,5 +1,7 @@
 'use strict';
 
+//JeongHyun An
+
 /*console.log(document.querySelector('.message').textContent);
 document.querySelector('.message').textContent = 'Correct number!';
 
@@ -54,9 +56,10 @@ document.querySelector('.check').addEventListener('click', function () {
     }*/
   }
   //when the guess is higher than the secret number
-  else if (guess > secretNumber) {
+  else if (guess != secretNumber) {
     if (score > 1) {
-      document.querySelector('.message').textContent = 'Too high!';
+      document.querySelector('.message').textContent =
+        guess > secretNumber ? 'Too high!' : 'Too low!';
       score--;
       document.querySelector('.score').textContent = score;
     } else {
@@ -68,21 +71,11 @@ document.querySelector('.check').addEventListener('click', function () {
       document.querySelector('.number').style.width = '30rem';
     }
   }
+  /* Changes made: refactoring. Sincewhether or not guess > secretNumber was
+  determined first, and then whether (score > 1) is true or not.
+  Changing order made the code much simpler*/
+
   //when the guess is lower than the secret number
-  else if (guess < secretNumber) {
-    if (score > 1) {
-      document.querySelector('.message').textContent = 'Too low!';
-      score--;
-      document.querySelector('.score').textContent = score;
-    } else {
-      score--;
-      document.querySelector('.score').textContent = score;
-      document.querySelector('.message').textContent = 'You lost the game!';
-      document.querySelector('.number').textContent = secretNumber;
-      document.querySelector('body').style.backgroundColor = '#FF0000';
-      document.querySelector('.number').style.width = '30rem';
-    }
-  }
 });
 
 document.querySelector('.again').addEventListener('click', function () {
