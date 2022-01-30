@@ -45,6 +45,13 @@ document.querySelector('.check').addEventListener('click', function () {
     //accessing CSS
     document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').style.width = '30rem';
+
+    //updating at the every end of a gam
+    /*
+    if(score > highscore){
+      highscore = score;
+      document.querySelector('.highscore').textContent = highscore;
+    }*/
   }
   //when the guess is higher than the secret number
   else if (guess > secretNumber) {
@@ -79,6 +86,7 @@ document.querySelector('.check').addEventListener('click', function () {
 });
 
 document.querySelector('.again').addEventListener('click', function () {
+  //updating highscore only when we hit again. (My approach)
   setHighScore(score);
   secretNumber = Math.trunc(Math.random() * 20) + 1;
   document.querySelector('.number').textContent = '?';
