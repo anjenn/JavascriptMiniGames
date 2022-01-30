@@ -25,3 +25,13 @@ btnCloseModal.addEventListener('click', closeModal);
 /*we shouldn't write closeModal(), because it's gonna call the function immediately
 NOT as we click.*/
 overlay.addEventListener('click', closeModal);
+
+//we can call the parameter of this below function anything
+//it's an event object of the key pushed down.
+document.addEventListener('keydown', function (e) {
+  console.log(e.key); //this should print 'escape'
+  if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+    console.log(`ESC was pressed`);
+    closeModal();
+  }
+});
