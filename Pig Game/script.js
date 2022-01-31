@@ -21,6 +21,7 @@ let ran = Math.trunc(Math.random() * 6) + 1;
 //Player Selection
 let playerStatus = 1;
 let currScore = 0; // score tracker for each round
+//could use an array instead.
 
 const newGame = document.querySelector('.btn--new');
 const diceRoll = document.querySelector('.btn--roll');
@@ -40,13 +41,13 @@ const resetCurrScores = function () {
 const switchPlayers = function () {
   if (playerStatus == 1) {
     //diceImg.classList.add('hidden');
-    document.querySelector('.player--0').classList.remove('player--active');
-    document.querySelector('.player--1').classList.add('player--active');
+    document.querySelector('.player--0').classList.toggle('player--active');
+    document.querySelector('.player--1').classList.toggle('player--active');
     playerStatus = 2;
     console.log(`player status changed to ${playerStatus}`);
   } else if (playerStatus == 2) {
-    document.querySelector('.player--0').classList.add('player--active');
-    document.querySelector('.player--1').classList.remove('player--active');
+    document.querySelector('.player--0').classList.toggle('player--active');
+    document.querySelector('.player--1').classList.toggle('player--active');
     playerStatus = 1;
     console.log(`player status changed to ${playerStatus}`);
   } else {
@@ -108,7 +109,7 @@ diceRoll.addEventListener('click', function () {
   /*
   const dice = Math.trunc(Math.random() * 6) + 1;
   diceImg.classList.remove('hidden');
-  diceImg.src=`dice-${dice}.png`;
+  diceImg.src=`dice-${dice}.png`;d
   */
 
   switch (ran) {
