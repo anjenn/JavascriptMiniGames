@@ -29,37 +29,6 @@ const diceImg = document.querySelector('#dice');
 document.getElementById('dice').style.display = 'none';
 //diceImg.classList.add('hidden');//same behavior as above
 
-const rollOnce = function () {
-  ran = Math.trunc(Math.random() * 6) + 1;
-  document.getElementById('dice').style.display = 'block';
-  switch (ran) {
-    case 1:
-      diceImg.src = 'dice-1.png';
-      scoring(ran);
-      break;
-    case 2:
-      diceImg.src = 'dice-2.png';
-      scoring(ran);
-      break;
-    case 3:
-      diceImg.src = 'dice-3.png';
-      scoring(ran);
-      break;
-    case 4:
-      diceImg.src = 'dice-4.png';
-      scoring(ran);
-      break;
-    case 5:
-      diceImg.src = 'dice-5.png';
-      scoring(ran);
-      break;
-    case 6:
-      diceImg.src = 'dice-6.png';
-      scoring(ran);
-      break;
-  }
-};
-
 const resetCurrScores = function () {
   currScore1El.textContent = 0;
   currScore2El.textContent = 0;
@@ -103,27 +72,19 @@ const checkIf100 = function () {
 };
 
 const scoring = function (ran) {
-  if (ran == 1) {
-    alert(`You lost all your points`);
-    resetCurrScores();
-    switchPlayers();
+  if (playerStatus == 1) {
+    console.log(`dice shows ${ran}`);
+    currScore += ran;
+    console.log(currScore);
+    currScore1El.textContent = currScore;
+  } else if (playerStatus == 2) {
+    console.log(`dice shows ${ran}`);
+    currScore += ran;
+    currScore2El.textContent = currScore;
   } else {
-    if (playerStatus == 1) {
-      console.log(`dice shows ${ran}`);
-      currScore += ran;
-      console.log(currScore);
-      currScore1El.textContent = currScore;
-    } else if (playerStatus == 2) {
-      console.log(`dice shows ${ran}`);
-      currScore += ran;
-      currScore2El.textContent = currScore;
-    } else {
-      console.log(`Error: No player was selected.`);
-    }
+    console.log(`Error: No player was selected.`);
   }
 };
-
-diceRoll.addEventListener('click', rollOnce);
 
 holdBtn.addEventListener('click', function () {
   //console.log(playerStatus);
@@ -136,6 +97,40 @@ holdBtn.addEventListener('click', function () {
   }
   resetCurrScores();
   switchPlayers();
+});
+
+diceRoll.addEventListener('click', function () {
+  ran = Math.trunc(Math.random() * 6) + 1;
+  document.getElementById('dice').style.display = 'block';
+  switch (ran) {
+    case 1:
+      diceImg.src = 'dice-1.png';
+      alert(`You lost all your points`);
+      resetCurrScores();
+      switchPlayers();
+      //scoring(ran);
+      break;
+    case 2:
+      diceImg.src = 'dice-2.png';
+      scoring(ran);
+      break;
+    case 3:
+      diceImg.src = 'dice-3.png';
+      scoring(ran);
+      break;
+    case 4:
+      diceImg.src = 'dice-4.png';
+      scoring(ran);
+      break;
+    case 5:
+      diceImg.src = 'dice-5.png';
+      scoring(ran);
+      break;
+    case 6:
+      diceImg.src = 'dice-6.png';
+      scoring(ran);
+      break;
+  }
 });
 
 newGame.addEventListener('click', function () {
