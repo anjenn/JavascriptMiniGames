@@ -12,7 +12,7 @@ totalScore2.textContent = initScore;
 let ran = Math.trunc(Math.random() * 6) + 1;
 //Player Selection
 let playerStatus = 1;
-let currScore; // score tracker for each round
+let currScore = 0; // score tracker for each round
 
 const newGame = document.querySelector('.btn--new');
 const diceRoll = document.querySelector('.btn--roll');
@@ -60,21 +60,17 @@ const resetCurrScores = function () {
 const scoring = function (ran) {
   if (ran == 1) {
     alert(`You lost all your points`);
-    if (playerStatus == 1) {
-      resetCurrScores();
-    } else if (playerStatus == 2) {
-      resetCurrScores();
-    } else {
-      alert(`Error: No player was selected.`);
-    }
+    resetCurrScores();
+    playerStatus = playerStatus == 1 ? 2 : 1;
   } else {
     if (playerStatus == 1) {
+      console.log(`dice shows ${ran}`);
       currScore += ran;
       console.log(currScore);
       currScore1.textContent = currScore;
     } else if (playerStatus == 2) {
+      console.log(`dice shows ${ran}`);
       currScore += ran;
-      console.log(currScore);
       currScore2.textContent = currScore;
     } else {
       console.log(`Error: No player was selected.`);
@@ -87,9 +83,9 @@ diceRoll.addEventListener('click', rollOnce);
 holdBtn.addEventListener('click', function () {
   //console.log(playerStatus);
   if (playerStatus == 1) {
-    totalScore1.textContent = currScore;
+    totalScore1.textContent = Number(totalScore1.textContent) + currScore;
   } else if (playerStatus == 2) {
-    totalScore2.textContent = currScore;
+    totalScore2.textContent = Number(totalScore2.textContent) + currScore;
   }
   resetCurrScores();
   playerStatus = playerStatus == 1 ? 2 : 1;
