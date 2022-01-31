@@ -1,13 +1,19 @@
 'use strict';
 
-const totalScore1 = document.querySelector('#score--0');
-const totalScore2 = document.querySelector('#score--1');
-const currScore1 = document.querySelector('#current--0');
-const currScore2 = document.querySelector('#current--1');
+/*const score0 = document.querySelector('#score--0');
+works the same as
+const score0 = document.getElementById('score--0');*/
+
+const totalScore1El = document.querySelector('#score--0');
+const totalScore2El = document.querySelector('#score--1');
+const currScore1El = document.querySelector('#current--0');
+const currScore2El = document.querySelector('#current--1');
 //Resetting the score of both players
 const initScore = 0;
-totalScore1.textContent = initScore;
-totalScore2.textContent = initScore;
+totalScore1El.textContent = 80;
+totalScore2El.textContent = 80;
+currScore1El.textContent = initScore;
+currScore2El.textContent = initScore;
 //Generating Random Value
 let ran = Math.trunc(Math.random() * 6) + 1;
 //Player Selection
@@ -17,12 +23,15 @@ let currScore = 0; // score tracker for each round
 const newGame = document.querySelector('.btn--new');
 const diceRoll = document.querySelector('.btn--roll');
 const holdBtn = document.querySelector('.btn--hold');
-const diceImg = document.getElementById('dice');
-
-//document.getElementById('dice').src = 'dice-1.png';
+//const diceImg = document.getElementById('dice');
+const diceImg = document.querySelector('#dice');
+//document.getElementById('dice');
+document.getElementById('dice').style.display = 'none';
+//diceImg.classList.add('hidden');//same behavior as above
 
 const rollOnce = function () {
   ran = Math.trunc(Math.random() * 6) + 1;
+  document.getElementById('dice').style.display = 'block';
   switch (ran) {
     case 1:
       diceImg.src = 'dice-1.png';
@@ -52,26 +61,62 @@ const rollOnce = function () {
 };
 
 const resetCurrScores = function () {
-  currScore1.textContent = 0;
-  currScore2.textContent = 0;
+  currScore1El.textContent = 0;
+  currScore2El.textContent = 0;
   currScore = 0;
+};
+
+const switchPlayers = function () {
+  if (playerStatus == 1) {
+    //diceImg.classList.add('hidden');
+    document.querySelector('.player--0').classList.remove('player--active');
+    document.querySelector('.player--1').classList.add('player--active');
+    playerStatus = 2;
+    console.log(`player status changed to ${playerStatus}`);
+  } else if (playerStatus == 2) {
+    document.querySelector('.player--0').classList.add('player--active');
+    document.querySelector('.player--1').classList.remove('player--active');
+    playerStatus = 1;
+    console.log(`player status changed to ${playerStatus}`);
+  } else {
+    alert('Wrong Player was selected!');
+  }
+};
+
+const checkIf100 = function () {
+  if (playerStatus == 1) {
+    if (totalScore1El.textContent >= 100) {
+      document.querySelector('.player--0').classList.add('player--winner');
+      alert(
+        `Player ${playerStatus} won with score of ${totalScore1El.textContent}!`
+      );
+    }
+  }
+  if (playerStatus == 2) {
+    if (totalScore2El.textContent >= 100) {
+      document.querySelector('.player--1').classList.add('player--winner');
+      alert(
+        `Player ${playerStatus} won with score of ${totalScore2El.textContent}!`
+      );
+    }
+  }
 };
 
 const scoring = function (ran) {
   if (ran == 1) {
     alert(`You lost all your points`);
     resetCurrScores();
-    playerStatus = playerStatus == 1 ? 2 : 1;
+    switchPlayers();
   } else {
     if (playerStatus == 1) {
       console.log(`dice shows ${ran}`);
       currScore += ran;
       console.log(currScore);
-      currScore1.textContent = currScore;
+      currScore1El.textContent = currScore;
     } else if (playerStatus == 2) {
       console.log(`dice shows ${ran}`);
       currScore += ran;
-      currScore2.textContent = currScore;
+      currScore2El.textContent = currScore;
     } else {
       console.log(`Error: No player was selected.`);
     }
@@ -83,10 +128,22 @@ diceRoll.addEventListener('click', rollOnce);
 holdBtn.addEventListener('click', function () {
   //console.log(playerStatus);
   if (playerStatus == 1) {
-    totalScore1.textContent = Number(totalScore1.textContent) + currScore;
+    totalScore1El.textContent = Number(totalScore1El.textContent) + currScore;
+    checkIf100();
   } else if (playerStatus == 2) {
-    totalScore2.textContent = Number(totalScore2.textContent) + currScore;
+    totalScore2El.textContent = Number(totalScore2El.textContent) + currScore;
+    checkIf100();
   }
   resetCurrScores();
-  playerStatus = playerStatus == 1 ? 2 : 1;
+  switchPlayers();
+});
+
+newGame.addEventListener('click', function () {
+  resetCurrScores();
+  switchPlayers();
+  totalScore1El.textContent = 0;
+  totalScore2El.textContent = 0;
+  document.getElementById('dice').style.display = 'none';
+  document.querySelector('.player--0').classList.remove('player--winner');
+  document.querySelector('.player--1').classList.remove('player--winner');
 });
