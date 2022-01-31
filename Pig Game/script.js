@@ -1,5 +1,7 @@
 'use strict';
 
+//Reference - https://pig-game-v2.netlify.app/
+
 /*const score0 = document.querySelector('#score--0');
 works the same as
 const score0 = document.getElementById('score--0');*/
@@ -71,6 +73,19 @@ const checkIf100 = function () {
   }
 };
 
+holdBtn.addEventListener('click', function () {
+  //console.log(playerStatus);
+  if (playerStatus == 1) {
+    totalScore1El.textContent = Number(totalScore1El.textContent) + currScore;
+    checkIf100();
+  } else if (playerStatus == 2) {
+    totalScore2El.textContent = Number(totalScore2El.textContent) + currScore;
+    checkIf100();
+  }
+  resetCurrScores();
+  switchPlayers();
+});
+
 const scoring = function (ran) {
   if (playerStatus == 1) {
     console.log(`dice shows ${ran}`);
@@ -86,22 +101,16 @@ const scoring = function (ran) {
   }
 };
 
-holdBtn.addEventListener('click', function () {
-  //console.log(playerStatus);
-  if (playerStatus == 1) {
-    totalScore1El.textContent = Number(totalScore1El.textContent) + currScore;
-    checkIf100();
-  } else if (playerStatus == 2) {
-    totalScore2El.textContent = Number(totalScore2El.textContent) + currScore;
-    checkIf100();
-  }
-  resetCurrScores();
-  switchPlayers();
-});
-
 diceRoll.addEventListener('click', function () {
   ran = Math.trunc(Math.random() * 6) + 1;
   document.getElementById('dice').style.display = 'block';
+
+  /*
+  const dice = Math.trunc(Math.random() * 6) + 1;
+  diceImg.classList.remove('hidden');
+  diceImg.src=`dice-${dice}.png`;
+  */
+
   switch (ran) {
     case 1:
       diceImg.src = 'dice-1.png';
