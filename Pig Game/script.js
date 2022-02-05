@@ -12,8 +12,8 @@ const currScore1El = document.querySelector('#current--0');
 const currScore2El = document.querySelector('#current--1');
 //Resetting the score of both players
 const initScore = 0;
-totalScore1El.textContent = 80;
-totalScore2El.textContent = 80;
+totalScore1El.textContent = initScore;
+totalScore2El.textContent = initScore;
 currScore1El.textContent = initScore;
 currScore2El.textContent = initScore;
 //Generating Random Value
@@ -104,6 +104,9 @@ diceRoll.addEventListener('click', function () {
   switch (ran) {
     case 1:
       diceImg.src = 'dice-1.png';
+      /*setTimeout(function () {
+        alert('After 5 seconds!');
+      }, 1000);*/
       alert(`You lost all your points`);
       resetCurrScores();
       switchPlayers();
